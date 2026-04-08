@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa9d2012fb093148881d0fdd0fd417f, type: 3}
+  m_Name: PredatorConfig
+  m_EditorClassIdentifier: Assembly-CSharp::EntityConfig
+  id: 3
+  title: Predator
+  prefabReference:
+    m_AssetGUID: 044b991c8ace9ee49b679ed955f58133
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  foodValue: 1
+  health: 10
+  movementSpeed: 10
+  attackDamage: 5
+  attackRate: 1
+  readyToEat: 0
+  stopDistance: 3
+  attackDistance: 4
+  Rules:
+  - EntityId: 3
+    TargetId: 0
