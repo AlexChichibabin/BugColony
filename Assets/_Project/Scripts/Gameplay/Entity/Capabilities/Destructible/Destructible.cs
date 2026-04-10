@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class Destructible : MonoBehaviour, IDestructible
+public class Destructible : MonoBehaviour, IDestructible, ISpawnable
 {
 	public GameObject GameObject => gameObject;
 	public IObservable<int> OnDamageTaken => onDamageTaken;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 
-public class TrackerTrigger : TriggerBase, ITrigger
+public class TrackerTrigger : TriggerBase, ITrigger, ISpawnable
 {
 	public override IList<IDestructible> Candidates => GetTargetCandidates();
 	public IEntityComponentRoot Root => root;

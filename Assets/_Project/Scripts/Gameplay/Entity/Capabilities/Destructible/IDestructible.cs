@@ -15,6 +15,4 @@ public interface IDestructible : ICapability
 	IDestructible ApplyDamage(int damage, IDestructible other);
 	void KillSelf();
 	void ApplyHeal(int health);
-	void OnSpawned();
-	void OnDespawned();
 }

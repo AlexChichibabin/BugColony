@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-public class BugControllerAI : MonoBehaviour, IControllerAI
+public class BugControllerAI : MonoBehaviour, IControllerAI, ISpawnable
 {
 	public IEntityComponentRoot Root => root;
 

@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UniRx;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
+
 
 public class Poolable : MonoBehaviour, IPoolable, IDisposable
 {
@@ -11,10 +14,8 @@ public class Poolable : MonoBehaviour, IPoolable, IDisposable
 	private IEntityPool pool;
 	private IEntityComponentRoot root;
 	private IDestructible destructible;
-	private IControllerAI controllerAI;
-	private ITrigger trigger;
-
-	private CompositeDisposable disp = new();
+    private IReadOnlyDictionary<Type, object> capabilities;
+    private readonly CompositeDisposable disp = new();
 
 	[Inject]
 	public void Construct(
@@ -24,16 +25,18 @@ public class Poolable : MonoBehaviour, IPoolable, IDisposable
 	}
 	public void OnSpawned()
 	{
-		if (controllerAI != null) controllerAI.OnSpawned();
-		if (trigger != null) trigger.OnSpawned();
-		if (destructible != null) destructible.OnSpawned();
+		foreach (var cap in capabilities.Values)
+		{
+			if (cap is ISpawnable) (cap as ISpawnable).OnSpawned();
+		}
 	}
 	public void OnDespawned()
 	{
-		if (controllerAI != null) controllerAI.OnDespawned();
-		if (trigger != null) trigger.OnDespawned();
-		if (destructible != null) destructible.OnDespawned();
-	}
+        foreach (var cap in capabilities.Values)
+        {
+            if (cap is ISpawnable) (cap as ISpawnable).OnDespawned();
+        }
+    }
 	public void Despawn()
 	{
 		pool.Despawn(root.Id, this);
@@ -42,9 +45,10 @@ public class Poolable : MonoBehaviour, IPoolable, IDisposable
 	public void Initialize(IEntityComponentRoot value)
 	{
 		root = value;
-		root.TryGetCapability(out destructible);
-		root.TryGetCapability(out controllerAI);
-		root.TryGetCapability(out trigger);
+		capabilities = root.Capabilities;
+
+        root.TryGetCapability(out destructible);
+
 		destructible.OnDeath.Subscribe(_ => Despawn()).AddTo(disp);
 	}
 

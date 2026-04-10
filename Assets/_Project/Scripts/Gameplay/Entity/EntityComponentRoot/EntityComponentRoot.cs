@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class EntityComponentRoot : MonoBehaviour, IEntityComponentRoot
 {
+	public IReadOnlyDictionary<Type, object> Capabilities => capabilities;
 	public GameObject GameObject => gameObject;
 	public EntityId Id => id;
 	public EntityConfig Config => config;
@@ -18,18 +19,17 @@ public abstract class EntityComponentRoot : MonoBehaviour, IEntityComponentRoot
 	{
 		foreach (var comp in GetComponents<MonoBehaviour>())
 		{
-			var type = comp.GetType();
-			foreach (var i in type.GetInterfaces())
-				capabilities[i] = comp;
+            if (comp is not ICapability || comp is IEntityComponentRoot) continue;
 
+            var type = comp.GetType();
+
+			foreach (var i in type.GetInterfaces())
+				if (typeof(ICapability).IsAssignableFrom(i) && i != typeof(ICapability))
+					capabilities[i] = comp;
 		}
-		foreach (var comp in capabilities.Values.Distinct())
-		{
-			if (comp is ICapability)
-			{
-				(comp as ICapability).Initialize(this);
-			}
-		}
+
+		foreach (var comp in capabilities.Values)
+			(comp as ICapability).Initialize(this);
 	}
 	public bool TryGetCapability<T>(out T cap) where T : class
 	{
