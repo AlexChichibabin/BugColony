@@ -3,7 +3,9 @@ using Zenject;
 
 public class PredatorSpawnRunner : IEntityRule
 {
-	[Inject] private readonly ICubeArea spawnArea;
+    public EntityId Id => EntityId.BugPredator;
+
+    [Inject] private readonly ICubeArea spawnArea;
 
 	private readonly int foodEatenForSplit = 3;
 	private readonly CompositeDisposable disp = new();

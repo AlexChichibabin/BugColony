@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EntityRuleTracker : IEntityRuleTracker, IDisposable
 {
@@ -7,18 +8,12 @@ public class EntityRuleTracker : IEntityRuleTracker, IDisposable
 
 	private Dictionary<EntityId, IEntityRule> rules = new();
 
-	private WorkerSpawnRunner workerRunner;
-	private PredatorSpawnRunner predatorRunner;
-	private FoodSpawnRunner foodRunner;
+
 
 	public EntityRuleTracker(
-		WorkerSpawnRunner workerRule,
-		PredatorSpawnRunner predatorRule,
-		FoodSpawnRunner foodSpawnRunner)
+		List<IEntityRule> rules)
 	{
-		this.workerRunner = workerRule;
-		this.predatorRunner = predatorRule;
-		this.foodRunner = foodSpawnRunner;
+		this.rules = rules.ToDictionary(x => x.Id);
 	}
 
 	public void Initialize()
@@ -38,8 +33,6 @@ public class EntityRuleTracker : IEntityRuleTracker, IDisposable
 	}
 	public void CreateRules()
 	{
-		rules.Add(EntityId.AntWorker, workerRunner);
-		rules.Add(EntityId.BugPredator, predatorRunner);
-		rules.Add(EntityId.Food, foodRunner);
+		
 	}
 }

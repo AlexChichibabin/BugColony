@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class WorkerSpawnRunner : IEntityRule
 {
-	private readonly IEntitySpawner spawner; 
+    public EntityId Id => EntityId.AntWorker;
+
+    private readonly IEntitySpawner spawner; 
 	private readonly IEntityTracker tracker;
 	private readonly ICubeArea spawnZone;
 	private readonly CompositeDisposable disp = new();
 	private readonly int foodEatenForSplit = 2; // from config
 
-	public WorkerSpawnRunner(
+    public WorkerSpawnRunner(
 		IEntitySpawner spawner,
 		IEntityTracker tracker,
 		ICubeArea spawnZone)

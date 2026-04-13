@@ -56,9 +56,9 @@ public class LevelInstaller : MonoInstaller
     private void RegisterSplitRules()
     {
         Container.Bind<IEntityRuleTracker>().To<EntityRuleTracker>().AsSingle();
-        Container.Bind<WorkerSpawnRunner>().FromNew().AsSingle();
-        Container.Bind<PredatorSpawnRunner>().FromNew().AsSingle();
-		Container.Bind<FoodSpawnRunner>().FromNew().AsSingle();
-	}
+        Container.Bind<IEntityRule>().To<WorkerSpawnRunner>().AsSingle();
+        Container.Bind<IEntityRule>().To<PredatorSpawnRunner>().AsSingle();
+        Container.Bind<IEntityRule>().To<FoodSpawnRunner>().AsSingle();
+    }
 
 }

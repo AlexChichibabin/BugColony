@@ -3,7 +3,9 @@ using UniRx;
 
 public class FoodSpawnRunner : IEntityRule
 {
-	private readonly IEntitySpawner spawner;
+    public EntityId Id => EntityId.Food;
+
+    private readonly IEntitySpawner spawner;
 	private readonly ICubeArea spawnZone;
 	private readonly CompositeDisposable disp = new();
 
