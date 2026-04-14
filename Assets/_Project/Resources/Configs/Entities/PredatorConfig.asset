@@ -25,9 +25,8 @@ MonoBehaviour:
   movementSpeed: 10
   attackDamage: 5
   attackRate: 1
-  readyToEat: 0
+  typeFlags: 4
   stopDistance: 3
   attackDistance: 4
-  Rules:
-  - EntityId: 3
-    TargetId: 0
+  rule:
+    TargetFlags: -1

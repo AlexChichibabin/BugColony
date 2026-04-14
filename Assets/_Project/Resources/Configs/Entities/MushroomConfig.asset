@@ -25,7 +25,8 @@ MonoBehaviour:
   movementSpeed: 2
   attackDamage: 0
   attackRate: 0
-  readyToEat: 0
+  typeFlags: 1
   stopDistance: 0
   attackDistance: 0
-  Rules: []
+  rule:
+    TargetFlags: 0

@@ -25,7 +25,7 @@ public class ConfigProvider : IConfigProvider
 	{
 		if (entities.ContainsKey(entityId))
 			return entities[entityId];
-		throw new KeyNotFoundException($"Ключ {entityId} не найден");
-		//return null;
+		else
+			throw new KeyNotFoundException($"Конфиг с ключом {entityId} не найден");
 	}
 }
