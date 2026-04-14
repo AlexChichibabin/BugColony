@@ -72,6 +72,8 @@ public class EntityTracker : IEntityTracker, IDisposable
 
 		foreach (var id in Enum.GetValues(typeof(EntityId)))
 		{
+			if ((EntityId)id == EntityId.None) continue;
+
 			EntityConfig containConfig = configProvider.GetEntity((EntityId)id);
 			if (containConfig)
 			{

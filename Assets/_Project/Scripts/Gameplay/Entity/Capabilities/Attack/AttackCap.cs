@@ -11,7 +11,7 @@ public class AttackCap : MonoBehaviour, IAttack
 
 	private void Start()
 	{
-		root.TryGetCapability(out feedable);
+		
 	}
 
 	public IDestructible Attack(IDestructible target)
@@ -27,6 +27,7 @@ public class AttackCap : MonoBehaviour, IAttack
 	{
 		root = value;
 		attackDamage = root.Config.AttackDamage;
-		TryGetComponent(out thisDestructible);
+        root.TryGetCapability(out feedable);
+        root.TryGetCapability(out thisDestructible);
 	}
 }
