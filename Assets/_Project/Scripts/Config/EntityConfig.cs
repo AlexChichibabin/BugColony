@@ -10,7 +10,7 @@ public class EntityConfig : ScriptableObject
 	public float StopDistance => stopDistance;
 	public float AttackDistance => attackDistance;
 	public float AttackRate => attackRate;
-	public EntityId ReadyToEat => readyToEat;
+	public EntityTypeFlags TypeFlags => typeFlags;
 	public EntityId Id => id;
 	public string Title => title;
 	public AssetReferenceGameObject PrefabReference => prefabReference;
@@ -20,8 +20,7 @@ public class EntityConfig : ScriptableObject
 	[Serializable]
 	public struct TargetRule
 	{
-		public EntityId EntityId;
-		public EntityId TargetId;
+		public EntityTypeFlags TargetFlags;
 	}
 
 	[Header("Spawn")]
@@ -39,36 +38,18 @@ public class EntityConfig : ScriptableObject
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private int attackDamage;
 	[SerializeField] private float attackRate;
-	[SerializeField] private EntityId readyToEat;
+	[SerializeField] private EntityTypeFlags typeFlags;
 
 	[Header("AI")]
 	[SerializeField] private float stopDistance;
 	[SerializeField] private float attackDistance;
 
-	[SerializeField] private TargetRule[] Rules;
+	[SerializeField] private TargetRule rule;
 
-	public bool TryGetTargetRule(EntityId state, out TargetRule rule)
+	public bool TryGetTargetRule(out TargetRule rule)
 	{
-		for (int i = 0; i < Rules.Length; i++)
-		{
-			if (Rules[i].EntityId == state)
-			{
-				rule = Rules[i];
-				return true;
-			}
-		}
-
-		for (int i = 0; i < Rules.Length; i++)
-		{
-			if (Rules[i].EntityId == EntityId.None)
-			{
-				rule = Rules[i];
-				return true;
-			}
-		}
-
-		rule = default;
-		return false;
+		rule = this.rule;
+		return true;
 	}
 }
 

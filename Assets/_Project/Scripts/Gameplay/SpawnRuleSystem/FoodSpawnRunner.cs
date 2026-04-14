@@ -3,7 +3,7 @@ using UniRx;
 
 public class FoodSpawnRunner : IEntityRule
 {
-    public EntityId Id => EntityId.Food;
+    public EntityId Id => EntityId.Mushroom;
 
     private readonly IEntitySpawner spawner;
 	private readonly ICubeArea spawnZone;
@@ -25,7 +25,7 @@ public class FoodSpawnRunner : IEntityRule
 			Observable.Interval(TimeSpan.FromSeconds(1))
 			.Select(_ => Unit.Default))
 			.Subscribe(_ =>
-			spawner.SpawnEntityRandomRotation(EntityId.Food, spawnZone.GetRandomInsideZone()))
+			spawner.SpawnEntityRandomRotation(EntityId.Mushroom, spawnZone.GetRandomInsideZone()))
 			.AddTo(disp);
 	}
 	public void SubscribeOnEntity(ISplitable splitable)

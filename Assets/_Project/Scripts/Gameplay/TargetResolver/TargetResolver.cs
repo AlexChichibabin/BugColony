@@ -13,8 +13,8 @@ public class TargetResolver : ITargetResolver
 		{
 			if (target == null) continue;
 			if (target.GameObject.Equals(ctx.Actor)) continue;
-			if (!ctx.ActorConfig.TryGetTargetRule(ctx.ActorConfig.Id, out var rule)) continue;
-			if (rule.TargetId == EntityId.None || rule.TargetId == target.Root.Id)
+			if (!ctx.ActorConfig.TryGetTargetRule(out var rule)) continue;
+			if ((rule.TargetFlags & target.Root.Config.TypeFlags) != 0)
 			{ 
 				float d = Vector3.Distance(target.GameObject.transform.position, ctx.Actor.transform.position);
 				bool better = d < bestDist;

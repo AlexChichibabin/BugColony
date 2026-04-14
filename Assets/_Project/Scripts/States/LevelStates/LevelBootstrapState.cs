@@ -48,6 +48,6 @@ public class LevelBootstrapState : IEnterableState
     {
 		await pool.PrewarmAsync(EntityId.AntWorker, 20, entitySpawner.SpawnPoint.position, entitySpawner.SpawnPoint.rotation, cts.Token);
         await pool.PrewarmAsync(EntityId.BugPredator, 10, entitySpawner.SpawnPoint.position, entitySpawner.SpawnPoint.rotation, cts.Token);
-		await pool.PrewarmAsync(EntityId.Food, 50, Vector3.zero, Quaternion.identity, cts.Token);
+		await pool.PrewarmAsync(EntityId.Mushroom, 50, Vector3.zero, Quaternion.identity, cts.Token);
 	}
 }
