@@ -14,8 +14,10 @@ public class LevelInstaller : MonoInstaller
 
         RegisterGameplayServices();
         RegisterSplitRules();
+        RegisterStratigies();
 
-		RegisterLevelStateMachine();
+
+        RegisterLevelStateMachine();
 
         Container.Bind<IInitializable>().To<LevelBootstrapper>().AsSingle().NonLazy();
     }
@@ -59,5 +61,9 @@ public class LevelInstaller : MonoInstaller
         Container.Bind<IEntityRule>().To<WorkerSpawnRunner>().AsSingle();
         Container.Bind<IEntityRule>().To<PredatorSpawnRunner>().AsSingle();
         Container.Bind<IEntityRule>().To<FoodSpawnRunner>().AsSingle();
+    }
+    private void RegisterStratigies()
+    {
+        Container.Bind<NearestTargetStrategy>().FromNew().AsSingle();
     }
 }

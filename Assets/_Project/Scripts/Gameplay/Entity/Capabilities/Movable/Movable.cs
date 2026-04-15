@@ -6,7 +6,7 @@ public class Movable : MonoBehaviour, IMovable
 	public IEntityComponentRoot Root => root;
 
 	[SerializeField] private NavMeshAgent agent;
-	[SerializeField] private float movementSpeed;
+	//[SerializeField] private float movementSpeed;
 
 	private NavMeshPath path;
 	private IEntityComponentRoot root;
@@ -19,7 +19,7 @@ public class Movable : MonoBehaviour, IMovable
 	public void Initialize(IEntityComponentRoot value)
 	{
 		root = value;
-		agent.speed = root.Config.MovementSpeed;
+        agent.speed = root.Config.MovementSpeed;
 	}
 	private void OnEnable()
 	{

@@ -1316,7 +1316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4843723433917000965}
   - component: {fileID: 617333949181400739}
-  - component: {fileID: 5562475694097671730}
+  - component: {fileID: -5377877556767033674}
   - component: {fileID: 6511684437808272074}
   - component: {fileID: 6431031066585671276}
   - component: {fileID: 1944223462389643528}
@@ -1377,7 +1377,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5562475694097671730
+--- !u!114 &-5377877556767033674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1391,7 +1391,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bug
   id: 3
   config: {fileID: 11400000, guid: c00ba7ffd408e3840b0f01c35c6efe6e, type: 2}
-  agent: {fileID: 4469365164732628785}
 --- !u!114 &6511684437808272074
 MonoBehaviour:
   m_ObjectHideFlags: 0

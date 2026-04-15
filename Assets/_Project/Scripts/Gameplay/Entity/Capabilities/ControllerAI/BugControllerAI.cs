@@ -8,9 +8,7 @@ public class BugControllerAI : MonoBehaviour, IControllerAI, ISpawnable
 {
 	public IEntityComponentRoot Root => root;
 
-	[SerializeField] private EntityConfig config;
-
-	[Inject] private ITargetResolver resolver;
+	[Inject] private NearestTargetStrategy strategy; // must be interface
 	private IEntityComponentRoot root;
 	private ReactiveProperty<IDestructible> target = new();
 
@@ -41,7 +39,11 @@ public class BugControllerAI : MonoBehaviour, IControllerAI, ISpawnable
 		if (disp != null)
 			disp?.Clear();
 	}
-	private void ActivateTargeting()
+    public void SetStrategy(ITargetSelectionStrategy strategy)
+    {
+        //this.strategy = strategy;
+    }
+    private void ActivateTargeting()
 	{
 		target
 			.Subscribe(tgt =>
@@ -88,20 +90,21 @@ public class BugControllerAI : MonoBehaviour, IControllerAI, ISpawnable
 	}
 	private bool CheckAtkDistance()
 	{
-		return Vector3.Distance(transform.position, target.Value.GameObject.transform.position) < config.AttackDistance;
+		return Vector3.Distance(transform.position, target.Value.GameObject.transform.position) < root.Config.AttackDistance;
 	}
 	private bool CheckStopDistance()
 	{
-		return Vector3.Distance(transform.position, target.Value.GameObject.transform.position) < config.StopDistance;
+		return Vector3.Distance(transform.position, target.Value.GameObject.transform.position) < root.Config.StopDistance;
 	}
 	private void FindTarget(IList<IDestructible> candidates)
 	{
 		TargetContext ctx = new TargetContext(
 			actor: gameObject,
 			candidates: candidates,
-			actorConfig: config
+			actorConfig: root.Config
 			);
 
-		target.Value = resolver.Resolve(ctx);
+		target.Value = strategy.Select(ctx);
 	}
+
 }

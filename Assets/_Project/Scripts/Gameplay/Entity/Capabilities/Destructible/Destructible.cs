@@ -12,19 +12,14 @@ public class Destructible : MonoBehaviour, IDestructible, ISpawnable
 	public IEntityComponentRoot Root => root;
 
 
-	[SerializeField] private int maxHits;
-
 	private Subject<Unit> onDeath = new();
 	private Subject<int> onDamageTaken = new();
 
-	private bool isDeath = false;
-	private int currentHits;
+    private bool isDeath = false;
+    private int maxHits;
+    private int currentHits;
 	private IEntityComponentRoot root;
 
-	private void Start()
-	{
-		HealFull();
-	}
 	public void HealFull() => currentHits = maxHits;
 	public void SetHitPoints(int hitPoints) => currentHits = Mathf.Clamp(hitPoints, 0, maxHits);
 	public IDestructible ApplyDamage(int damage, IDestructible other)
@@ -60,6 +55,7 @@ public class Destructible : MonoBehaviour, IDestructible, ISpawnable
 	public void Initialize(IEntityComponentRoot value)
 	{
 		root = value;
+		maxHits = root.Config.Health;
 	}
 
     protected virtual void Die()

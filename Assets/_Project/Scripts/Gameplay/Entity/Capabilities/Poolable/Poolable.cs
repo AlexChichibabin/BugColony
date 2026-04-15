@@ -39,7 +39,7 @@ public class Poolable : MonoBehaviour, IPoolable, IDisposable
     }
 	public void Despawn()
 	{
-		pool.Despawn(root.Id, this);
+		pool.Despawn(root.Config.Id, this);
 	}
 
 	public void Initialize(IEntityComponentRoot value)

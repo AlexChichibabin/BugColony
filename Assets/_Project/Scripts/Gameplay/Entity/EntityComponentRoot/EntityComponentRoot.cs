@@ -6,11 +6,12 @@ using UnityEngine;
 public abstract class EntityComponentRoot : MonoBehaviour, IEntityComponentRoot
 {
 	public GameObject GameObject => gameObject;
-	public EntityId Id => id;
+	//public EntityId Id => id;
 	public EntityConfig Config => config;
 
-	[SerializeField] protected EntityId id;
-	[SerializeField] private EntityConfig config;
+	//[SerializeField] protected EntityId id;
+	[SerializeField] private EntityConfig config; 
+	
 
 	protected readonly Dictionary<Type, object> capabilities = new();
 

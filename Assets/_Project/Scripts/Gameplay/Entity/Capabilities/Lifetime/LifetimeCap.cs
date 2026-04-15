@@ -1,12 +1,12 @@
 using UniRx;
 using UnityEngine;
 
-public class LifetimeCap : MonoBehaviour, ILifetimeCap
+public class LifetimeCap : MonoBehaviour, ILifetimeCap, ISpawnable
 {
     public float Lifetime => lifetime;
     public IEntityComponentRoot Root => root;
 
-    [SerializeField] private float lifetime = 10f;
+    private float lifetime = -1;
 
     private IEntityComponentRoot root;
     private IPoolable poolable;
@@ -16,16 +16,21 @@ public class LifetimeCap : MonoBehaviour, ILifetimeCap
     {
         root = value;
         root.TryGetCapability(out poolable);
+        lifetime = root.Config.Lifetime;
     }
     public void RefreshTimer()
     {
         disp.Clear();
         StartTimer();
 	}
-    private void OnEnable()
+    public void OnSpawned()
     {
         StartTimer();
-	}
+    }
+    public void OnDespawned()
+    {
+        disp?.Clear();
+    }
     private void OnDisable()
     {
         disp?.Clear();
@@ -36,11 +41,12 @@ public class LifetimeCap : MonoBehaviour, ILifetimeCap
     }
     private void StartTimer()
     {
-		Observable.Timer(System.TimeSpan.FromSeconds(lifetime))
-			.Subscribe(_ =>
-			{
-				poolable?.Despawn();
-			}).
-			AddTo(disp);
-	}
+        if (lifetime > 0)
+            Observable.Timer(System.TimeSpan.FromSeconds(lifetime))
+                .Subscribe(_ =>
+                {
+                  poolable?.Despawn();
+                }).
+                AddTo(disp);
+    }
 }

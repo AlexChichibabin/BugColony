@@ -15,9 +15,10 @@ public class EntityConfig : ScriptableObject
 	public string Title => title;
 	public AssetReferenceGameObject PrefabReference => prefabReference;
 	public int FoodValue => foodValue;
-	public float Health => health;
+	public int Health => health;
+	public float Lifetime => lifetime;
 
-	[Serializable]
+    [Serializable]
 	public struct TargetRule
 	{
 		public EntityTypeFlags TargetFlags;
@@ -34,11 +35,13 @@ public class EntityConfig : ScriptableObject
 	[SerializeField] private int foodValue;
 
 	[Header("Characteristics")]
-	[SerializeField] private float health;
+	[SerializeField] private int health;
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private int attackDamage;
 	[SerializeField] private float attackRate;
-	[SerializeField] private EntityTypeFlags typeFlags;
+    [SerializeField] private float lifetime = -1f;
+    [SerializeField] private EntityTypeFlags typeFlags;
+
 
 	[Header("AI")]
 	[SerializeField] private float stopDistance;

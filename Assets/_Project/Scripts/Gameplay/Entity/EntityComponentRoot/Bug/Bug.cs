@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Bug : EntityComponentRoot, IBug
 {
-	public NavMeshAgent Agent => agent;
+	//public NavMeshAgent Agent => agent;
 
-	[SerializeField] private NavMeshAgent agent;
+	//[SerializeField] private NavMeshAgent agent;
 }

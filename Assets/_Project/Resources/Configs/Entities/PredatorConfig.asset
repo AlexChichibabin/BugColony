@@ -21,10 +21,11 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   foodValue: 1
-  health: 10
+  health: 15
   movementSpeed: 10
   attackDamage: 5
   attackRate: 1
+  lifetime: 10
   typeFlags: 4
   stopDistance: 3
   attackDistance: 4
