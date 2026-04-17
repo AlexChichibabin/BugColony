@@ -39,7 +39,7 @@ public class BugControllerAI : MonoBehaviour, IControllerAI, ISpawnable
 		if (disp != null)
 			disp?.Clear();
 	}
-    public void SetStrategy(ITargetSelectionStrategy strategy)
+    public void SetStrategy(ITargetingStrategy strategy)
     {
         //this.strategy = strategy;
     }

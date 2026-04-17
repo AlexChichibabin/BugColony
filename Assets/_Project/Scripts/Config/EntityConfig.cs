@@ -17,6 +17,7 @@ public class EntityConfig : ScriptableObject
 	public int FoodValue => foodValue;
 	public int Health => health;
 	public float Lifetime => lifetime;
+    public TargetingStrategyType TargetingStrategy => targetingStrategyType;
 
     [Serializable]
 	public struct TargetRule
@@ -41,6 +42,7 @@ public class EntityConfig : ScriptableObject
 	[SerializeField] private float attackRate;
     [SerializeField] private float lifetime = -1f;
     [SerializeField] private EntityTypeFlags typeFlags;
+	[SerializeField] private TargetingStrategyType targetingStrategyType;
 
 
 	[Header("AI")]

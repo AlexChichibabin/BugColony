@@ -10,7 +10,7 @@ public class LevelBootstrapState : IEnterableState
     private IEntityPool pool;
     private IEntityTracker tracker;
     private IEntitySpawner entitySpawner;
-    private IEntityRuleTracker ruleRunner;
+    private IEntityStrategiesTracker ruleRunner;
 	private CancellationTokenSource cts = new();
 
 	public LevelBootstrapState( 
@@ -19,7 +19,7 @@ public class LevelBootstrapState : IEnterableState
         IEntityPool pool,
         IEntitySpawner entitySpawner,
         IEntityTracker tracker,
-        IEntityRuleTracker ruleRunner
+        IEntityStrategiesTracker ruleRunner
         
 		)
     {
@@ -38,7 +38,6 @@ public class LevelBootstrapState : IEnterableState
         string sceneName = SceneManager.GetActiveScene().name;
         LevelConfig levelConfig = configProvider.GetLevel(sceneName);
 		tracker.Initialize();
-		ruleRunner.CreateRules();
 		await PrewarmPool();
 
 		levelStateSwitcher.Enter<LevelGameplayState>();

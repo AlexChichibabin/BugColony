@@ -12,9 +12,10 @@ public class EntityPool : IEntityPool
 
 	private readonly PoolContainer container;
 	private readonly IConfigProvider configProvider;
-	private readonly IGameFactory gameFactory;
+    //private readonly IGameFactory gameFactory;
+	private readonly IEntityStrategiesTracker tracker;
 
-	private readonly Dictionary<EntityId, List<IPoolable>> allObjects = new();
+    private readonly Dictionary<EntityId, List<IPoolable>> allObjects = new();
 	private readonly Dictionary<EntityId, Stack<IPoolable>> availableObjects = new();
 
 	private Subject<EntityTrackerDTO> entitySpawned = new(); 
@@ -22,12 +23,14 @@ public class EntityPool : IEntityPool
 
 	public EntityPool(
 		IConfigProvider configProvider,
-		IGameFactory gameFactory,
-		PoolContainer container)
+		//IGameFactory gameFactory,
+		PoolContainer container,
+        IEntityStrategiesTracker tracker)
 	{
 		this.configProvider = configProvider;
-		this.gameFactory = gameFactory;
+		//this.gameFactory = gameFactory;
 		this.container = container;
+		this.tracker = tracker;
 	}
 
 	public async UniTask PrewarmAsync(EntityId id,int count, Vector3 pos, Quaternion rot, CancellationToken token)
@@ -76,15 +79,19 @@ public class EntityPool : IEntityPool
 		availableObjects.Clear();
 	}
 
+
 	private async UniTask<IPoolable> CreateNewAsync(EntityId id, Vector3 position, Quaternion rotation, CancellationToken token)
 	{
 		EntityConfig config = configProvider.GetEntity(id);
 
-		GameObject go = await gameFactory.CreateNewAsync(config.PrefabReference, position, rotation, token);
+		if (!tracker.EntityFactories.ContainsKey(id)) return null;
 
-		go.transform.SetParent(container.transform);
+        GameObject go = await tracker.EntityFactories[id].CreateEntity(position, rotation, token);
+        //GameObject go = await gameFactory.CreateNewAsync(config.PrefabReference, position, rotation, token);
+
+        go.transform.SetParent(container.transform);
 		IPoolable plb = go.GetComponent<IPoolable>();
-		go.GetComponent<IEntityComponentRoot>().Initialize();
+		//go.GetComponent<IEntityComponentRoot>().Initialize();
 		go.SetActive(false);
 		GetAllObjectsById(id).Add(plb);
 		availableObjects[id].Push(plb);
