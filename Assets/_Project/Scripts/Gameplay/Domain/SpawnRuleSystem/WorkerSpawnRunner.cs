@@ -53,7 +53,7 @@ public class WorkerSpawnRunner : IEntityRule
 		EntityId spawnedId = EntityId.AntWorker;
 		if (tracker.ActiveEntities[EntityId.AntWorker] > 10)
 		{
-			int chance = UnityEngine.Random.Range(1, 10);
+			int chance = UnityEngine.Random.Range(1, 11);
 			if (chance <= 1) spawnedId = EntityId.BugPredator;
 		}
 		return spawnedId;

@@ -3,7 +3,7 @@ using Zenject;
 
 public class LevelGameplayState : IEnterableState, ITickableState, IExitableState
 {
-	[Inject] private IEntityStrategiesProvider entityRuleRunner;
+	[Inject] private IEntityRulesProvider entityRuleRunner;
 
     public void Enter()
     {

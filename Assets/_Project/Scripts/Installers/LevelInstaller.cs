@@ -14,8 +14,8 @@ public class LevelInstaller : MonoInstaller
 
         RegisterGameplayServices();
         RegisterSplitRules();
-        RegisterStrategies();
-        RegisterFactories();
+        //RegisterStrategies();
+        //RegisterFactories();
 
         RegisterLevelStateMachine();
 
@@ -57,7 +57,7 @@ public class LevelInstaller : MonoInstaller
     }
     private void RegisterSplitRules()
     {
-        Container.Bind<IEntityStrategiesProvider>().To<EntityStrategiesProvider>().AsSingle();
+        Container.Bind<IEntityRulesProvider>().To<EntityRulesProvider>().AsSingle();
         Container.Bind<IEntityRule>().To<WorkerSpawnRunner>().AsSingle();
         Container.Bind<IEntityRule>().To<PredatorSpawnRunner>().AsSingle();
         Container.Bind<IEntityRule>().To<FoodSpawnRunner>().AsSingle();
@@ -69,9 +69,9 @@ public class LevelInstaller : MonoInstaller
     }
     private void RegisterFactories()
     {
+        Container.Bind<IEntityFactoryProvider>().To<EntityFactoryProvider>().AsSingle();
         Container.Bind<IEntityFactory>().To<PredatorFactory>().AsSingle();
         Container.Bind<IEntityFactory>().To<WorkerFactory>().AsSingle();
         Container.Bind<IEntityFactory>().To<MushroomFactory>().AsSingle();
-
     }
 }

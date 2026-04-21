@@ -9,15 +9,15 @@ public class WorkerFactory : IEntityFactory
 
     private IGameFactory gameFactory;
     private EntityConfig config;
-    private IEntityStrategiesProvider tracker;
+    private IEntityRulesProvider stratProvider;
 
     public WorkerFactory(
         IGameFactory gameFactory,
-        IEntityStrategiesProvider tracker,
+        IEntityRulesProvider tracker,
         IConfigProvider configProvider)
     {
         this.gameFactory = gameFactory;
-        this.tracker = tracker;
+        this.stratProvider = tracker;
         config = configProvider.GetEntity(Id);
     }
 
@@ -27,11 +27,11 @@ public class WorkerFactory : IEntityFactory
 
         IEntityComponentRoot root = go.GetComponent<IEntityComponentRoot>();
         root.Initialize();
-        if (root.TryGetCapability(out IControllerAI controller))
-        {
-            if (tracker.TargetingStrategy.ContainsKey(config.TargetingStrategy))
-                controller.SetStrategy(tracker.TargetingStrategy[TargetingStrategyType.FindNearest]);
-        }
+        //if (root.TryGetCapability(out IControllerAI controller))
+        //{
+        //    if (stratProvider.TargetingStrategy.ContainsKey(config.TargetingStrategy))
+        //        controller.SetStrategy(stratProvider.TargetingStrategy[TargetingStrategyType.FindNearest]);
+        //}
 
         return go;
     }

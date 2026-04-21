@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public interface IEntityStrategiesProvider
+public interface IEntityRulesProvider
 {
 	IReadOnlyDictionary<EntityId, IEntityRule> EntityRules { get; }
     //IReadOnlyDictionary<EntityId, IEntityFactory> EntityFactories { get; }

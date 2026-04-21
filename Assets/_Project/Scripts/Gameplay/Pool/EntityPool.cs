@@ -12,9 +12,8 @@ public class EntityPool : IEntityPool
 
 	private readonly PoolContainer container;
 	private readonly IConfigProvider configProvider;
-    //private readonly IGameFactory gameFactory;
-	//private readonly IEntityStrategiesProvider tracker;
-	private readonly List<IEntityFactory> factories;
+	//private readonly IEntityFactoryProvider factoryProvider;
+    private readonly IGameFactory gameFactory;
 
     private readonly Dictionary<EntityId, List<IPoolable>> allObjects = new();
 	private readonly Dictionary<EntityId, Stack<IPoolable>> availableObjects = new();
@@ -24,16 +23,14 @@ public class EntityPool : IEntityPool
 
 	public EntityPool(
 		IConfigProvider configProvider,
-		//IGameFactory gameFactory,
-		List<IEntityFactory> factories,
-		PoolContainer container)
+        //IEntityFactoryProvider factoryProvider,
+		PoolContainer container,
+		IGameFactory gameFactory)
 	{
 		this.configProvider = configProvider;
-        //this.gameFactory = gameFactory;
-		this.factories = factories;
-
+		//this.factoryProvider = factoryProvider;
         this.container = container;
-		//this.tracker = tracker;
+		this.gameFactory = gameFactory;
 	}
 
 	public async UniTask PrewarmAsync(EntityId id,int count, Vector3 pos, Quaternion rot, CancellationToken token)
@@ -51,12 +48,13 @@ public class EntityPool : IEntityPool
 
 		IPoolable plb = availableObjects[id].Pop();
 		GameObject obj = plb.GameObject;
-		obj.transform.SetPositionAndRotation(pos, rot);
 
+		obj.transform.SetPositionAndRotation(pos, rot);
 		obj.SetActive(true);
 
 		plb.OnSpawned();
 		plb.Root.TryGetCapability(out IDestructible dest);
+
 		entitySpawned.OnNext(new EntityTrackerDTO(id, 1, dest));
 
 		return plb;
@@ -87,26 +85,13 @@ public class EntityPool : IEntityPool
 	{
 		EntityConfig config = configProvider.GetEntity(id);
 
-		//if (!tracker.EntityFactories.ContainsKey(id)) return null;
-		GameObject go = new();
-
-        foreach (var fact in factories)
-		{
-			if (fact.Id == id)
-				go = await fact.CreateEntity(position, rotation, token);
-			else
-				continue;
-        }
-
-            
-        
-        
-        //GameObject go = await tracker.EntityFactories[id].CreateEntity(position, rotation, token);
-        //GameObject go = await gameFactory.CreateNewAsync(config.PrefabReference, position, rotation, token);
+        //if (!factoryProvider.Factories.ContainsKey(id)) return null;
+        //GameObject go = await factoryProvider.Factories[id].CreateEntity(position, rotation, token);
+        GameObject go = await gameFactory.CreateNewAsync(config.PrefabReference, position, rotation, token);
+		go.GetComponent<EntityComponentRoot>().Initialize();
 
         go.transform.SetParent(container.transform);
 		IPoolable plb = go.GetComponent<IPoolable>();
-		//go.GetComponent<IEntityComponentRoot>().Initialize();
 		go.SetActive(false);
 		GetAllObjectsById(id).Add(plb);
 		availableObjects[id].Push(plb);
