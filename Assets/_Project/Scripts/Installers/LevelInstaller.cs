@@ -13,7 +13,7 @@ public class LevelInstaller : MonoInstaller
         Debug.Log("LEVEL: Install");
 
         RegisterGameplayServices();
-        RegisterSplitRules();
+        RegisterSpawnRules();
         RegisterStrategies();
         RegisterFactories();
 
@@ -55,16 +55,18 @@ public class LevelInstaller : MonoInstaller
         Container.Bind<ICubeArea>().FromInstance(spawnZone).AsSingle();
         Container.Bind<PoolContainer>().FromInstance(poolContainer).AsSingle();
     }
-    private void RegisterSplitRules()
+    private void RegisterSpawnRules()
     {
-        Container.Bind<IEntityRuleProvider>().To<EntityRuleProvider>().AsSingle();
-        Container.Bind<IEntityRule>().To<WorkerSpawnRunner>().AsSingle();
-        Container.Bind<IEntityRule>().To<PredatorSpawnRunner>().AsSingle();
-        Container.Bind<IEntityRule>().To<FoodSpawnRunner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<EntityRuleProvider>().AsSingle();
+
+        Container.BindInterfacesAndSelfTo<WorkerSpawnRunner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<PredatorSpawnRunner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<FoodSpawnRunner>().AsSingle();
     }
     private void RegisterStrategies()
     {
         Container.Bind<IStrategyProvider>().To<StrategyProvider>().AsSingle();
+
         Container.Bind<ITargetingStrategy>().To<NearestTargetStrategy>().AsSingle();
         Container.Bind<ITargetingStrategy>().To<WeakestTargetStrategy>().AsSingle();
     }

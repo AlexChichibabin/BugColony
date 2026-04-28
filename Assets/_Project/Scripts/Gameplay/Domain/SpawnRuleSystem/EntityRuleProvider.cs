@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class EntityRuleProvider : IEntityRuleProvider, IDisposable
+public class EntityRuleProvider : IEntityRuleProvider
 {
 	public IReadOnlyDictionary<EntityId, IEntityRule> EntityRules => rules;
 
@@ -24,9 +23,9 @@ public class EntityRuleProvider : IEntityRuleProvider, IDisposable
 
 	public void Dispose()
 	{
-		foreach (var rule in rules)
-		{
-			rule.Value.Dispose();
-		}
+		//foreach (var rule in rules)
+		//{
+		//	rule.Value.Dispose();
+		//}
 	}
 }

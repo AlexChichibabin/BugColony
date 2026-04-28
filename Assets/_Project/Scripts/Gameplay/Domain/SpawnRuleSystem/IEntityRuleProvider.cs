@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public interface IEntityRuleProvider
+public interface IEntityRuleProvider : IDisposable
 {
 	IReadOnlyDictionary<EntityId, IEntityRule> EntityRules { get; }
 
